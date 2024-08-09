@@ -1,3 +1,25 @@
+# ======= RISCVBox benchmark program
+
+This program is designed to benchmark RISCVBox, Spike, and QEMU for my master's thesis. Instead of rendering DOOM to a framebuffer, the program outputs to the console whenever a frame is rendered, with frame delays removed. This adjustment was necessary because Spike and QEMU lack accurate time reporting, leading to incorrect results in benchmarks like CoreMark. Therefore, all benchmarking had to be performed on the host side.
+
+To build this project, first install the RISC-V GNU toolchain. Then, navigate to the doomgeneric folder and run the following commands:
+```bash
+make iwad
+make # For baremetal
+make linux # For Linux build
+```
+
+This repo provides a script that runs a command as a subprocess, filters its output for a specified word, and logs the timestamps (in nanoseconds, relative to the first occurrence) to `output.csv`. The script can be found in `doomgeneric/timestamp_csv.py`
+
+**Usage:** 
+```bash
+python3 capture_output.py "./start-qemu-bare.sh" "doom_draw"
+```
+
+**Note:**
+This repository also includes the demo version of doom 1, located in doomgeneric/doom1.iwad
+
+# ======= Original README below
 # doomgeneric
 The purpose of doomgeneric is to make porting Doom easier.
 Of course Doom is already portable but with doomgeneric it is possible with just a few functions.

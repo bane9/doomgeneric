@@ -701,6 +701,8 @@ char *D_TryFindWADByName(char *filename)
 
 char *D_FindIWAD(int mask, GameMission_t *mission)
 {
+    return "doom1.iwad";
+
     char *result;
     char *iwadfile;
     int iwadparm;

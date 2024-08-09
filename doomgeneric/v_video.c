@@ -862,14 +862,6 @@ void V_DrawMouseSpeedBox(int speed)
     yellow = I_GetPaletteIndex(0xff, 0xff, 0x00);
     white = I_GetPaletteIndex(0xff, 0xff, 0xff);
 
-    // If the mouse is turned off or acceleration is turned off, don't
-    // draw the box at all.
-
-    if (!usemouse || fabs(mouse_acceleration - 1) < 0.01)
-    {
-        return;
-    }
-
     // Calculate box position
 
     box_x = SCREENWIDTH - MOUSE_SPEED_BOX_WIDTH - 10;

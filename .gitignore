@@ -8,3 +8,6 @@
 .vs/
 Debug/
 Release/
+
+doomgeneric/doom_benchmark*
+doomgeneric/bin_to_c

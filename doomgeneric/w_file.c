@@ -39,14 +39,6 @@ extern wad_file_class_t posix_wad_file;
 
 static wad_file_class_t *wad_file_classes[] = 
 {
-/*
-#ifdef _WIN32
-    &win32_wad_file,
-#endif
-*/
-#ifdef HAVE_MMAP
-    &posix_wad_file,
-#endif
     &stdc_wad_file,
 };
 
