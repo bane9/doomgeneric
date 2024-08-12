@@ -65,7 +65,7 @@ def visualize_timing_results(filenames):
     
     place_diff_annotations(plt.gca(), diffs, colors, "ms")
     
-    plt.title('Raspršeni Dijagram Rezultata Merenja Vremena')
+    plt.title('Raspršeni Dijagram Rezultata Merenja Vremena Učitavanja Linuksa (manje je bolje)')
     plt.xlabel('Broj Pokretanja')
     plt.ylabel('Vreme (s)')
     plt.legend()
@@ -76,7 +76,7 @@ def visualize_timing_results(filenames):
     
     average_times = []
     labels = []
-    
+
     for filename in filenames:
         data = read_csv(filename)
         times = [float(row['Time (ms)']) for row in data]
@@ -84,15 +84,21 @@ def visualize_timing_results(filenames):
         average_times.append(average_time)
         label = filename.replace(".csv", "").replace("timing_results_", "").replace("_", " ")
         labels.append(label)
-        plt.bar(label, average_time)
-    
-    percentage_differences = calculate_percentage_differences(average_times)
-    
+
+    sorted_data = sorted(zip(average_times, labels), key=lambda x: x[0])
+
+    sorted_times, sorted_labels = zip(*sorted_data)
+
+    for label, time in zip(sorted_labels, sorted_times):
+        plt.bar(label, time)
+
+    percentage_differences = calculate_percentage_differences(sorted_times)
+
     text_to_add = ""
     for i, j, percentage_diff in percentage_differences:
-        text_to_add += f'{labels[i]} u poređenju sa {labels[j]}: {percentage_diff:.2f}%\n'
-    
-    plt.title('Prosečno Vreme')
+        text_to_add += f'{sorted_labels[i]} u poređenju sa {sorted_labels[j]}: {percentage_diff:.2f}%\n'
+
+    plt.title('Prosečno Vreme Učitavanja Linuksa (manje je bolje)')
     plt.ylabel('Vreme (ms)')
     plt.xlabel(f'Platforma\n{text_to_add}')
     plt.grid(True)
@@ -117,7 +123,7 @@ def visualize_memory_usage(filenames):
     
     place_diff_annotations(plt.gca(), diffs, colors, "MB")
     
-    plt.title('Raspršeni Dijagram Rezultata Korišćenja Memorije')
+    plt.title('Raspršeni Dijagram Rezultata Korišćenja Memorije (manje je bolje)')
     plt.xlabel('Broj Pokretanja')
     plt.ylabel('Korišćenje Memorije (MB)')
     plt.legend()
@@ -128,7 +134,7 @@ def visualize_memory_usage(filenames):
     
     average_memory_usages = []
     labels = []
-    
+
     for filename in filenames:
         data = read_csv(filename)
         memory_usages = [int(row['Memory Usage (bytes)']) / (1024 * 1024) for row in data]
@@ -136,15 +142,21 @@ def visualize_memory_usage(filenames):
         average_memory_usages.append(average_memory_usage)
         label = filename.replace(".csv", "").replace("memory_usage_results_", "").replace("_", " ")
         labels.append(label)
-        plt.bar(label, average_memory_usage)
-    
-    percentage_differences = calculate_percentage_differences(average_memory_usages)
-    
+
+    sorted_data = sorted(zip(average_memory_usages, labels), key=lambda x: x[0])
+
+    sorted_memory_usages, sorted_labels = zip(*sorted_data)
+
+    for label, memory_usage in zip(sorted_labels, sorted_memory_usages):
+        plt.bar(label, memory_usage)
+
+    percentage_differences = calculate_percentage_differences(sorted_memory_usages)
+
     text_to_add = ""
     for i, j, percentage_diff in percentage_differences:
-        text_to_add += f'{labels[i]} u poređenju sa {labels[j]}: {percentage_diff:.2f}%\n'
-    
-    plt.title('Prosečno Korišćenje Memorije')
+        text_to_add += f'{sorted_labels[i]} u poređenju sa {sorted_labels[j]}: {percentage_diff:.2f}%\n'
+
+    plt.title('Prosečno Korišćenje Memorije (manje je bolje)')
     plt.ylabel('Korišćenje Memorije (MB)')
     plt.xlabel(f'Platforma\n{text_to_add}')
     plt.grid(True)
@@ -169,7 +181,7 @@ def visualize_timestamps(filenames):
     
     place_diff_annotations(plt.gca(), diffs, colors, "ms")
     
-    plt.title('Raspršeni Dijagram Vremenskih Oznaka Izvršavanja Frejm-ova')
+    plt.title('Raspršeni Dijagram Vremenskih Oznaka Izvršavanja Frejm-ova (manje je bolje)')
     plt.xlabel('Broj Pokretanja')
     plt.ylabel('Vreme Izvršavanja Frejm-ova (ms)')
     plt.legend()
@@ -180,7 +192,7 @@ def visualize_timestamps(filenames):
     
     average_timestamps = []
     labels = []
-    
+
     for filename in filenames:
         data = read_csv(filename)
         timestamps = [float(row['Timestamp (ms)']) for row in data]
@@ -188,19 +200,26 @@ def visualize_timestamps(filenames):
         average_timestamps.append(average_timestamp)
         label = filename.replace(".csv", "").replace("doom_draw_timestamps_", "").replace("_", " ")
         labels.append(label)
-        plt.bar(label, average_timestamp)
-    
-    percentage_differences = calculate_percentage_differences(average_timestamps)
-    
+
+    sorted_data = sorted(zip(average_timestamps, labels), key=lambda x: x[0])
+
+    sorted_timestamps, sorted_labels = zip(*sorted_data)
+
+    for label, timestamp in zip(sorted_labels, sorted_timestamps):
+        plt.bar(label, timestamp)
+
+    percentage_differences = calculate_percentage_differences(sorted_timestamps)
+
     text_to_add = ""
     for i, j, percentage_diff in percentage_differences:
-        text_to_add += f'{labels[i]} u poređenju sa {labels[j]}: {percentage_diff:.2f}%\n'
-    
-    plt.title('Prosečno Vreme Izvršavanja Frejm-ova')
+        text_to_add += f'{sorted_labels[i]} u poređenju sa {sorted_labels[j]}: {percentage_diff:.2f}%\n'
+
+    plt.title('Prosečno Vreme Izvršavanja Frejm-ova (manje je bolje)')
     plt.xlabel(f'Platforma\n{text_to_add}')
     plt.ylabel('Vreme Izvršavanja Frejm-ova (ms)')
     plt.grid(True)
     plt.show()
+
 
 def find_csv_files(pattern):
     return glob(pattern)
